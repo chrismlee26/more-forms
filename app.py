@@ -154,10 +154,11 @@ def save_image(image, filter_type):
     # Append the filter type at the beginning (in case the user wants to 
     # apply multiple filters to 1 image, there won't be a name conflict)
     new_file_name = f"{filter_type}-{image.filename}"
+    # space_filter = string.split[' '] = '-' for loop, append into -
     image.filename = new_file_name
 
     # Construct full file path
-    file_path = os.path.join(app.root_path, 'static/images', file_name)
+    file_path = os.path.join(app.root_path, 'static/images', new_file_name)
     
     # Save the image
     image.save(file_path)
@@ -181,22 +182,30 @@ def image_filter():
         
         # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
         # as a variable
-        filter_type = ''
+        filter_type = request.form.get('filter_type')
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
 
         # TODO: call `save_image()` on the image & the user's chosen filter type, save the returned
         # value as the new file path
+        file_path = save_image(image, filter_type)
+        # print(save_image(image, filter_type))
 
         # TODO: Call `apply_filter()` on the file path & filter type
-
-        image_url = f'/static/images/{filter_type}-{image.filename}'
+        apply_filter(file_path, filter_type)
+        image_url = f'/static/images/{image.filename}'
+        # image_url = file_path
 
         context = {
             # TODO: Add context variables here for:
             # - The full list of filter types
             # - The image URL
+            'filter_types' : filter_types,
+            'image' : image,
+            'file_path' : file_path,
+            'image_url' : image_url
+
         }
 
         return render_template('image_filter.html', **context)

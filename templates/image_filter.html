@@ -25,6 +25,12 @@ Image Filtering
                     <!-- TODO: Use a for loop to display an option element for each possible filter 
                         type-->
                     <option value="blur">blur</option>
+                    <option value="contour">contour</option>
+                    <option value="detail">detail</option>
+                    <option value="edge enhance">edge enhance</option>
+                    <option value="emboss">emboss</option>
+                    <option value="sharpen">sharpen</option>
+                    <option value="smooth">smooth</option>
                 </select>
             </label>
         </p>
@@ -40,6 +46,7 @@ Image Filtering
     </p>
     <p>
         <!-- TODO: Display the filtered image using the img tag and the URL passed in -->
+        <img src="{{ image_url }}">
     </p>
 </section>
 {% endif %}

@@ -51,10 +51,29 @@ def compliments():
 @app.route('/compliments_results')
 def compliments_results():
     """Show the user some compliments."""
+
+    users_name = request.args.get('users_name')
+    wants_compliments = request.args.get('wants_compliments')
+    num_compliments = int(request.args.get('num_compliments'))
+    result = ""
+
+    if wants_compliments == "yes":
+        result = random.sample(list_of_compliments, num_compliments)
+
+    if wants_compliments == "no":
+        result = "not wanting compliments"
+
     context = {
-        # TODO: Enter your context variables here.
+        'users_name' : users_name,
+        'wants_compliments' : wants_compliments,
+        'num_compliments' : num_compliments,
+        'result' : result
     }
 
+    # print(users_name)
+    # print(wants_compliments)
+    # print(num_compliments)
+    # print(result)
     return render_template('compliments_results.html', **context)
 
 
@@ -65,7 +84,7 @@ def compliments_results():
 animal_to_fact = {
     'koala': 'Koala fingerprints are so close to humans\' that they could taint crime scenes.',
     'parrot': 'Parrots will selflessly help each other out.',
-    'mantis shrimp': 'The mantis shrimp has the world\'s fastest punch.',
+    'mantis_shrimp': 'The mantis shrimp has the world\'s fastest punch.',
     'lion': 'Female lions do 90 percent of the hunting.',
     'narwhal': 'Narwhal tusks are really an "inside out" tooth.'
 }
@@ -74,13 +93,45 @@ animal_to_fact = {
 def animal_facts():
     """Show a form to choose an animal and receive facts."""
 
+    animal = ""
+    animal_result = ""
+
     # TODO: Collect the form data and save as variables
+    animal = request.args.get('animal')
+    animal_result = request.args.get('animal_result')
+
+    koala = animal_to_fact["koala"]
+    parrot = animal_to_fact["parrot"]
+    mantis_shrimp = animal_to_fact["mantis_shrimp"]
+    lion = animal_to_fact["lion"]
+    narwhal = animal_to_fact["narwhal"]
+
+    if animal == 'koala':
+        animal_result = animal_to_fact["koala"]
+    elif animal == 'parrot':
+        animal_result = animal_to_fact["parrot"]
+    elif animal == 'mantis_shrimp':
+        animal_result = animal_to_fact["mantis_shrimp"]
+    elif animal == 'lion':
+        animal_result = animal_to_fact["lion"]
+    elif animal == 'narwhal':
+        animal_result = animal_to_fact["narwhal"]
+    
+    # print(animal_result)
 
     context = {
         # TODO: Enter your context variables here for:
         # - the list of all animals (get from animal_to_fact)
         # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
+        'koala' : koala,
+        'parrot' : parrot,
+        'mantis_shrimp' : mantis_shrimp,
+        'lion' : lion,
+        'narwhal' : narwhal,
+        'animal' : animal,
+        'animal_result' : animal_result
     }
+
     return render_template('animal_facts.html', **context)
 
 

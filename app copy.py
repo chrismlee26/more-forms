@@ -182,7 +182,8 @@ def image_filter():
         
         # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
         # as a variable
-        filter_type = request.form.get('filter_type')
+        
+        filter_type_html = request.form.get('filter_type')
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
@@ -204,7 +205,8 @@ def image_filter():
             'filter_types' : filter_types,
             'image' : image,
             'file_path' : file_path,
-            'image_url' : image_url,
+            'image_url' : image_url
+
         }
 
         return render_template('image_filter.html', **context)
@@ -244,20 +246,14 @@ pp = PrettyPrinter(indent=4)
 
 @app.route('/gif_search', methods=['GET', 'POST'])
 def gif_search():
-    
     """Show a form to search for GIFs and show resulting GIFs from Tenor API."""
     if request.method == 'POST':
         # TODO: Get the search query & number of GIFs requested by the user, store each as a 
         # variable
-        q = request.form.get('search_query')
-        limit = request.form.get('quantity')
 
         response = requests.get(
             TENOR_URL,
             {
-                'q' : q,
-                'key' : API_KEY,
-                'limit' : limit
                 # TODO: Add in key-value pairs for:
                 # - 'q': the search query
                 # - 'key': the API key (defined above)
@@ -267,16 +263,14 @@ def gif_search():
         gifs = json.loads(response.content).get('results')
 
         context = {
-            'gif': gifs,
+            'gifs': gifs
         }
 
         # Uncomment me to see the result JSON!
-        pp.pprint(gifs)
+        # pp.pprint(gifs)
 
-        return render_template('gif_results.html', context=context)
+        return render_template('gif_search.html', **context)
     else:
-
-
         return render_template('gif_search.html')
 
 if __name__ == '__main__':

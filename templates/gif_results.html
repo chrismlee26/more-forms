@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Gif Results
+{% endblock %}
+
+{% block content %}
+
+
+<!-- {{ context['gif']['url'] }} -->
+{{ context gifs['media'][0]['gif']['url'] }}
+{% endblock %}

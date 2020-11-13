@@ -7,6 +7,10 @@ Gif Results
 {% block content %}
 
 
-<!-- {{ context['gif']['url'] }} -->
-{{ context gifs['media'][0]['gif']['url'] }}
+
+{% for gif in gifs %}
+  <img src="{{ gif['media'][0]['gif']['url'] }} ">
+{% endfor %}
+
+
 {% endblock %}

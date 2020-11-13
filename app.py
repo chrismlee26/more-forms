@@ -267,13 +267,13 @@ def gif_search():
         gifs = json.loads(response.content).get('results')
 
         context = {
-            'gif': gifs,
+            'gifs': gifs,
         }
 
         # Uncomment me to see the result JSON!
         pp.pprint(gifs)
 
-        return render_template('gif_results.html', context=context)
+        return render_template('gif_search.html', **context)
     else:
 
 
